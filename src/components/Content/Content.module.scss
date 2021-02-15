@@ -1,0 +1,19 @@
+
+$xs: 576px;
+$layout-max-width: 992px; //antd grid width "lg"
+
+@mixin xs {
+  @media (max-width: #{$xs}) {
+    @content;
+  }
+}
+.section {
+  max-width: $layout-max-width;
+  margin: auto;
+  transition: all 0.2s;
+
+  padding: 0 16px;
+  @include xs {
+    padding: 0 24px;
+  }
+}

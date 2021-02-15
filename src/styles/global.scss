@@ -1,0 +1,30 @@
+@font-face {
+  font-family: 'SFProText-Regular';
+  font-display: swap;
+  src: local('SFProText'), local('SFProText-Regular'),
+    url('/fonts/SFProText/SFProText-Regular.ttf') format('truetype'),
+    url('/fonts/SFProText/SFProText-Regular.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'SFProText-Bold';
+  font-display: swap;
+  src: url('/fonts/SFProText/SFProText-Bold.ttf') format('truetype'),
+    url('/fonts/SFProText/SFProText-Bold.otf') format('opentype');
+}
+
+:global {
+  #__next {
+    height: 100%;
+  }
+
+  .reset-a,
+  .reset-a:hover,
+  .reset-a:visited,
+  .reset-a:focus,
+  .reset-a:active {
+    text-decoration: none;
+    color: inherit;
+    outline: 0;
+  }
+}
