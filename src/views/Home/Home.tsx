@@ -4,8 +4,9 @@ import { useHeader } from 'layouts/containers/Public/Header/Header'
 import { List, Button, notification } from 'antd'
 import useValueBreakpoint from 'hooks/useValueBreakpoint'
 import Link from 'next/link'
-import PokemonCard from 'views/Home/PokemonCard'
+import PokemonCard from 'components/PokemonCard'
 import usePokemons from 'data/usePokemons'
+import { useWindowWidth } from '@react-hook/window-size'
 
 const TOTAL_FETCH = 15
 
@@ -14,10 +15,12 @@ function Home() {
     title: 'Pokemon',
   })
 
+  const width = useWindowWidth()
+
   const { fetchMore, data, variables, loading, error } = usePokemons({})
 
   const breakpointColumn = useValueBreakpoint({
-    xs: 1,
+    xs: width >= 428 ? 2 : 1,
     sm: 2,
     md: 3,
     lg: 4,
