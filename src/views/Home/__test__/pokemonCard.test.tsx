@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import mockWindowMatchMedia from 'hooks/useValueBreakpoint/__mocks__/mockWindowMatchMedia'
-import PokemonCard from 'views/Home/PokemonCard'
+import PokemonCard from 'components/PokemonCard'
 import * as React from 'react'
 
 jest.mock('next/image', () => {
