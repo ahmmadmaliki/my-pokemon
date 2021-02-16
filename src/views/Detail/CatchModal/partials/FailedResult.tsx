@@ -5,7 +5,10 @@ import { Result } from 'antd'
 function FailedResult(props) {
   return (
     <div {...props}>
-      <Result icon={<FrownOutlined />} title="Try again later" />
+      <Result
+        icon={<FrownOutlined />}
+        title={"Yah gagal menangkap pokemon :'("}
+      />
     </div>
   )
 }
