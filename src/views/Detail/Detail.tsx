@@ -8,8 +8,10 @@ import Title from 'components/Typography/Title'
 import { Button, Descriptions, Result } from 'antd'
 import Pokeball from 'components/Pokeball/Pokeball'
 import useToggle from 'hooks/useToggle'
-import CatchModal from 'views/Detail/CatchModal/CatchModal'
 import Link from 'next/link'
+import dynamic from 'next/dynamic'
+
+const CatchModal = dynamic(() => import('views/Detail/CatchModal/CatchModal'))
 
 function reduceName(key: string) {
   return (acc, curVal) => {
