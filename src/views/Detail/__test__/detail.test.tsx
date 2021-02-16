@@ -19,6 +19,17 @@ jest.mock('react-confetti', () => {
   return () => <div />
 })
 
+jest.mock('next/dynamic', () => (func: () => Promise<any>) => {
+  let component: any = null
+  func().then((module: any) => {
+    component = module.default
+  })
+  const DynamicComponent = (...args) => component(...args)
+  DynamicComponent.displayName = 'LoadableComponent'
+  DynamicComponent.preload = jest.fn()
+  return DynamicComponent
+})
+
 mockWindowMatchMedia('lg')
 
 function mockSuccessData(extraData?: UsePokemonByNameData) {
