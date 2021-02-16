@@ -26,7 +26,7 @@ function PublicContainer(props: IProps) {
     title: 'Pokemon',
   })
 
-  const storagePokemon = useStoragePokemon('myPokemon', [])
+  const storagePokemon = useStoragePokemon('myPokemon')
 
   return (
     <ContextContainer.Provider
