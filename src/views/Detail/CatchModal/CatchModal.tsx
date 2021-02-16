@@ -7,8 +7,6 @@ import catchPokemon from 'helpers/catchPokemon'
 import SuccessResult from 'views/Detail/CatchModal/partials/SuccessResult'
 import FailedResult from 'views/Detail/CatchModal/partials/FailedResult'
 import LoadingGacha from 'views/Detail/CatchModal/partials/LoadingGacha'
-import { Formik, Form } from 'formik'
-import FInput from 'fields/FInput/FInput'
 import FormNickname from 'views/Detail/CatchModal/partials/FormNickname'
 
 type CatchModalProps = ModalProps & {
@@ -17,7 +15,7 @@ type CatchModalProps = ModalProps & {
 
 export const GACHA_TIMEOUT = 2000
 
-const toggleStateConfig = {
+export const toggleStateConfig = {
   initialState: {
     title: 'Catching Pokemon...',
     isFinish: false,
@@ -46,7 +44,7 @@ function CatchModal(props: CatchModalProps) {
         const isCatchedPokemon = catchPokemon()
         stateCatching.toggle({
           title: isCatchedPokemon
-            ? 'Yeay you got it :D'
+            ? 'Yeay, you got it :D'
             : 'Failed to catch Pokemon :(',
           isFinish: true,
           isLoading: false,
@@ -72,7 +70,7 @@ function CatchModal(props: CatchModalProps) {
         footer={null}
         closable={false}
         destroyOnClose
-        maskClosable={isFinish}
+        maskClosable={!isCatchedPokemon && isFinish}
         {...props}
       >
         <div data-testid={'modalPokemon'} />
