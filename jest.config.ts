@@ -1,5 +1,6 @@
 export default async (): Promise<any> => {
   return {
+    coverageReporters: ['json', 'lcov', 'text', 'clover', 'text-summary'],
     moduleDirectories: ['node_modules', 'src'],
     preset: 'ts-jest',
     moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
