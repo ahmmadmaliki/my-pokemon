@@ -46,10 +46,8 @@ describe('basic render', () => {
       }),
     )
 
-    // act
-    const els = screen.getAllByTestId('itemLoading')
-
     // assert
+    const els = screen.getAllByTestId('itemLoading')
     expect(els.length).toBe(TOTAL_FETCH_ITEM)
   })
 
