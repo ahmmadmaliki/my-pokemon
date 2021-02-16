@@ -1,5 +1,10 @@
 import { useEffect, useRef } from 'react'
+import * as yup from 'yup'
 import usePersistedState from 'hooks/usePersistedState/usePersistedState'
+
+export const schemaPokemon = yup.object({
+  nickname: yup.string().required('nickname is required!'),
+})
 
 interface UseStoragePokemonData {
   name: string
@@ -43,6 +48,7 @@ function useStoragePokemon(key) {
   return {
     data: value,
     add: (pokemon: UseStoragePokemonData) => {
+      schemaPokemon.validateSync(pokemon)
       const curPokemon = value.find(
         (iPokemon) => iPokemon.nickname === pokemon.nickname,
       )

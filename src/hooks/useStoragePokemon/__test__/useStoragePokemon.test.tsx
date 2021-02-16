@@ -129,11 +129,30 @@ describe('basic function', () => {
 
     // assert
     expect(() =>
-      result.current.add({
-        nickname,
-        name: 'anyName',
-        image: 'anyImageUrl',
-      }),
+      act(() =>
+        result.current.add({
+          nickname,
+          name: 'anyName',
+          image: 'anyImageUrl',
+        }),
+      ),
     ).toThrow('nickname already exist!')
+  })
+
+  test('should throw error when adding empty string nickname', async () => {
+    // arrange
+    const nickname = ''
+    const { result } = renderHook(() => useStoragePokemon('anyKey'))
+
+    // assert
+    expect(() =>
+      act(() =>
+        result.current.add({
+          nickname,
+          name: 'anyName',
+          image: 'anyImageUrl',
+        }),
+      ),
+    ).toThrow('nickname is required!')
   })
 })
