@@ -29,10 +29,6 @@ function useStoragePokemon(key) {
 
   const decrement = (name) => {
     const owned = countOwned(name)
-    if (owned === 0) {
-      mapOwned.set(name, 0)
-      return false
-    }
     mapOwned.set(name, owned - 1)
     return true
   }
