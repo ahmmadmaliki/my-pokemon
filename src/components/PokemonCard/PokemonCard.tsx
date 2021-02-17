@@ -1,12 +1,16 @@
 import React, { useContext, useMemo } from 'react'
-import { Card, Skeleton, List } from 'antd'
+import { Card, Skeleton, List, Button, Modal } from 'antd'
 import Image from 'next/image'
 import { CardProps } from 'antd/lib/card'
 import { css } from '@emotion/react'
 import useValueBreakpoint from 'hooks/useValueBreakpoint'
-import { ContextContainer } from 'layouts/containers/Public'
+import ContextContainer from 'layouts/containers/Public/ContextContainer'
+import Title from 'components/Typography/Title'
+import Text from 'components/Typography/Text'
+import ExclamationCircleOutlined from '@ant-design/icons/ExclamationCircleOutlined'
 
 type PokemonCardProps = {
+  nickname?: string
   name: string
   image: string
 } & CardProps
@@ -22,7 +26,7 @@ const cssList = css`
 `
 
 function PokemonCard(props: PokemonCardProps) {
-  const { name, image, loading, ...restProps } = props
+  const { nickname, name, image, loading, ...restProps } = props
   const { storagePokemon } = useContext(ContextContainer)
   const { value: isExtraSmall } = useValueBreakpoint({
     xs: true,
@@ -43,9 +47,43 @@ function PokemonCard(props: PokemonCardProps) {
         />
       )
     )
-  }, [name, image])
+  }, [nickname, name, image])
 
   return useMemo(() => {
+    const title = (
+      <div>
+        <Title noMargin style={{ whiteSpace: 'nowrap' }}>
+          {nickname}
+        </Title>
+        <Text style={{ whiteSpace: 'nowrap' }}>{name}</Text>
+      </div>
+    )
+
+    const buttonRelease = nickname && (
+      <Button
+        danger
+        type={'primary'}
+        data-testid={'buttonRelease'}
+        onClick={(event) => {
+          event.preventDefault()
+          Modal.confirm({
+            title: `Do you want to release '${name}' with nickname '${nickname}'?`,
+            icon: <ExclamationCircleOutlined />,
+            onOk() {
+              storagePokemon.remove(nickname)
+            },
+            onCancel() {},
+          })
+        }}
+      >
+        Release
+      </Button>
+    )
+
+    const elOwned = (
+      <div style={{ marginBottom: 5, whiteSpace: 'nowrap' }}>{owned}</div>
+    )
+
     if (isExtraSmall) {
       const skeletonText = (
         <Skeleton title={false} paragraph={{ rows: 1 }} active />
@@ -54,8 +92,17 @@ function PokemonCard(props: PokemonCardProps) {
         <List.Item.Meta
           css={cssList}
           avatar={loading ? <Skeleton.Image /> : <div>{elImage}</div>}
-          title={loading ? skeletonText : name}
-          description={loading ? skeletonText : owned}
+          title={loading ? skeletonText : title}
+          description={
+            loading ? (
+              skeletonText
+            ) : (
+              <div>
+                {elOwned}
+                <div>{buttonRelease}</div>
+              </div>
+            )
+          }
           data-testid={'listPokemon'}
         />
       )
@@ -79,12 +126,13 @@ function PokemonCard(props: PokemonCardProps) {
             elImage
           )
         }
+        actions={buttonRelease && [buttonRelease]}
         hoverable
       >
-        <Card.Meta title={name} description={owned} />
+        <Card.Meta title={title} description={elOwned} />
       </Card>
     )
-  }, [name, loading, owned, isExtraSmall])
+  }, [nickname, name, loading, owned, isExtraSmall])
 }
 
 export default PokemonCard
