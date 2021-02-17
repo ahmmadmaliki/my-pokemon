@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useMemo, useReducer } from 'react'
-import { Col, Button, Row, Avatar, Menu } from 'antd'
+import { Col, Button, Row, Avatar, Menu, Badge } from 'antd'
+import ContextContainer from 'layouts/containers/Public/ContextContainer'
 import Text from 'components/Typography/Text'
 import Link from 'next/link'
 import BaseHeader, { BaseHeaderProps } from 'components/BaseHeader/BaseHeader'
@@ -7,20 +8,6 @@ import Title from 'components/Typography/Title'
 import useValueBreakpoint from 'hooks/useValueBreakpoint'
 import HamburgerButton from 'components/HamburgerButton/HamburgerButton'
 import { css } from '@emotion/react'
-
-const cssBlackButton = css(
-  `.ant-btn {
-              border-color: black;
-              background: black;
-              &:hover,
-              &:focus,
-              &:active {
-                border-color: #777;
-                background: #777;
-              }
-            }
-          `,
-)
 
 export type HeaderProps = {
   title: string
@@ -45,6 +32,25 @@ export function useHeaderProps(initialProps?: HeaderProps) {
   }
 }
 
+export const cssBlackButton = css`
+  #containerButton {
+    .ant-btn {
+      border-color: black;
+      background: black;
+      &:hover,
+      &:focus,
+      &:active {
+        border-color: #777;
+        background: #777;
+      }
+    }
+
+    .ant-badge {
+      width: 100%;
+    }
+  }
+`
+
 export function useHeader(initialProps?: HeaderProps) {
   const ctxHeader = useContext(ContextHeader)
   useEffect(() => {
@@ -57,28 +63,33 @@ export function useHeader(initialProps?: HeaderProps) {
 function Header(props: HeaderProps) {
   const { title, ...restProps } = props
 
+  const { storagePokemon } = useContext(ContextContainer)
   const { value: isExtraSmall } = useValueBreakpoint({
     xs: true,
     sm: false,
   })
 
+  const { length: totalPokemon } = storagePokemon.data || {}
+
   const btnMyPokemon = useMemo(() => {
     return (
       <Link href={'/my-pokemon'}>
-        <a css={cssBlackButton}>
-          <Button danger type={'primary'} block={isExtraSmall}>
-            <Text fontFamily={'bold'}>My Pokemon</Text>
-          </Button>
+        <a id={'containerButton'}>
+          <Badge count={totalPokemon}>
+            <Button danger type={'primary'} block={isExtraSmall}>
+              <Text fontFamily={'bold'}>My Pokemon</Text>
+            </Button>
+          </Badge>
         </a>
       </Link>
     )
-  }, [isExtraSmall])
+  }, [isExtraSmall, totalPokemon])
 
   const menu = isExtraSmall ? (
     <div style={{ display: 'inline-block' }}>
       <HamburgerButton
         menu={
-          <Menu>
+          <Menu css={cssBlackButton}>
             <Menu.Item>{btnMyPokemon}</Menu.Item>
           </Menu>
         }
@@ -93,6 +104,7 @@ function Header(props: HeaderProps) {
   return (
     <BaseHeader
       {...restProps}
+      css={cssBlackButton}
       styleContainer={{
         backgroundColor: 'white',
       }}
