@@ -136,4 +136,17 @@ describe('basic form submit', () => {
 
     expect(mockCancelModal).toBeCalledTimes(1)
   })
+
+  test('should render success view in form', async () => {
+    render(
+      <MockContext>
+        <FormNickname />
+      </MockContext>,
+    )
+
+    userEvent.type(screen.getByTestId('nickname'), 'anyName')
+    userEvent.click(screen.getByTestId('submit'))
+
+    await screen.findByTestId('successView')
+  })
 })
