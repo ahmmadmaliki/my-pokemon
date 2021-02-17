@@ -7,7 +7,7 @@
     "test": "npm run test:ci",
     "test:dev": "npm run test:types && npm run test:eslint && jest --watch",
     "test:ci": "npm run test:types && npm run test:eslint && jest",
-    "test:coverage": "npm run test:ci --coverage; xdg-open coverage/lcov-report/index.html",
+    "test:coverage": "npm run test:types && npm run test:eslint && jest --coverage; xdg-open coverage/lcov-report/index.html",
     "test:types": "tsc",
     "test:eslint": "eslint --ext .ts,.tsx ./src",
     "type-check": "tsc --noEmit",
