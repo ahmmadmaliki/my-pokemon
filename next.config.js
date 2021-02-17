@@ -1,5 +1,4 @@
 /* eslint-disable */
-const env = require('./next-env')
 
 const withLess = require('@zeit/next-less')
 const withCSS = require('@zeit/next-css')
@@ -106,5 +105,4 @@ module.exports = {
   images: {
     domains: ['raw.githubusercontent.com'],
   },
-  env,
 }
