@@ -48,7 +48,12 @@ function FormNickname(props: FormNickname) {
               <Col xs={24} style={{ textAlign: 'end' }}>
                 <Row justify={'end'} gutter={[10, 0]}>
                   <Col>
-                    <Button data-testid={'cancel'} danger type={'primary'}>
+                    <Button
+                      data-testid={'cancel'}
+                      danger
+                      type={'primary'}
+                      onClick={ctxCatchModal.props.onCancel}
+                    >
                       Cancel
                     </Button>
                   </Col>
