@@ -8,6 +8,7 @@ import {
   useHeaderProps,
 } from 'layouts/containers/Public/Header/Header'
 import useStoragePokemon from 'hooks/useStoragePokemon/useStoragePokemon'
+import ContextContainer from 'layouts/containers/Public/ContextContainer'
 
 interface IProps {
   Component: ReactComponentLike
@@ -15,10 +16,6 @@ interface IProps {
 
 export const HEIGHT_HEADER = 56
 export const HEIGHT_FOOTER = 107.5
-
-export const ContextContainer = React.createContext<{
-  storagePokemon: ReturnType<typeof useStoragePokemon>
-}>({} as any)
 
 function PublicContainer(props: IProps) {
   const { Component } = props
@@ -39,7 +36,7 @@ function PublicContainer(props: IProps) {
           ...headerValue,
         }}
       >
-        <div>
+        <div style={{ minWidth: 280 }}>
           <Header {...headerValue.props} />
           <div
             style={{
