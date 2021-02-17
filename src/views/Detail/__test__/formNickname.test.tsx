@@ -74,6 +74,7 @@ const MockContext = ({ children }: any) => {
 describe('basic form submit', () => {
   beforeEach(() => {
     mockAdd.mockReset()
+    mockCancelModal.mockReset()
   })
   test('should submit submitting a basic form', async () => {
     render(
@@ -122,5 +123,17 @@ describe('basic form submit', () => {
     userEvent.click(screen.getByTestId('submit'))
 
     await screen.findByText('anyErrorMessage')
+  })
+
+  test('should call function close modal when click cancel Button', async () => {
+    render(
+      <MockContext>
+        <FormNickname />
+      </MockContext>,
+    )
+
+    userEvent.click(screen.getByTestId('cancel'))
+
+    expect(mockCancelModal).toBeCalledTimes(1)
   })
 })
