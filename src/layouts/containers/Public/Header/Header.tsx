@@ -8,6 +8,9 @@ import Title from 'components/Typography/Title'
 import useValueBreakpoint from 'hooks/useValueBreakpoint'
 import HamburgerButton from 'components/HamburgerButton/HamburgerButton'
 import { css } from '@emotion/react'
+import { useTransition, animated } from 'react-spring'
+import { useRouter } from 'next/router'
+import ArrowLeftOutlined from '@ant-design/icons/ArrowLeftOutlined'
 
 export type HeaderProps = {
   title: string
@@ -62,6 +65,20 @@ export function useHeader(initialProps?: HeaderProps) {
 
 function Header(props: HeaderProps) {
   const { title, ...restProps } = props
+  const { asPath } = useRouter()
+  const isShowBack = asPath !== '/'
+
+  const transitions = useTransition(isShowBack, null, {
+    from: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      opacity: 0,
+      transform: 'translate3d(100%,0,0)',
+    },
+    enter: { opacity: 1, transform: 'translate3d(0%,0,0)' },
+    leave: { opacity: 0, transform: 'translate3d(-50%,0,0)' },
+  })
 
   const { storagePokemon } = useContext(ContextContainer)
   const { value: isExtraSmall } = useValueBreakpoint({
@@ -113,15 +130,29 @@ function Header(props: HeaderProps) {
         <Link href={'/'}>
           <a className={'reset-a'}>
             <Row wrap={false}>
-              <Col style={{ alignSelf: 'center' }}>
-                <Avatar
-                  style={{
-                    backgroundColor: '#e21d26',
-                  }}
-                  size={'large'}
-                >
-                  <Text bold>P</Text>
-                </Avatar>
+              <Col style={{ alignSelf: 'center', width: 40, height: 40 }}>
+                {transitions.map(({ item: isShowBack, props }) => {
+                  return (
+                    <animated.div style={props}>
+                      <Avatar
+                        style={{
+                          backgroundColor: isShowBack
+                            ? 'transparent'
+                            : '#e21d26',
+                        }}
+                        size={'large'}
+                      >
+                        {isShowBack ? (
+                          <ArrowLeftOutlined
+                            style={{ color: 'black', fontSize: 20 }}
+                          />
+                        ) : (
+                          <Text bold>P</Text>
+                        )}
+                      </Avatar>
+                    </animated.div>
+                  )
+                })}
               </Col>
               <Col>
                 <Title noMargin style={{ padding: 6 }}>
