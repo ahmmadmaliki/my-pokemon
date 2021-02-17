@@ -15,6 +15,10 @@ mockWindowMatchMedia('lg')
 const mockAdd = jest.fn()
 const mockCancelModal = jest.fn()
 
+jest.mock('next/link', () => {
+  return (props) => <div {...props} />
+})
+
 function createArrPokemon(type: 'move' | 'type', data: string[]) {
   return data.map((value) => {
     return {
