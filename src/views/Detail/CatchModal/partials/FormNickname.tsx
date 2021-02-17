@@ -88,8 +88,9 @@ function FormNickname(props: FormNickname) {
                     <div
                       css={cssBlackButton}
                       style={{ display: 'inline-block' }}
+                      key={'goToPokemonList'}
                     >
-                      <Link href={'/my-pokemon'} key={'goToPokemonList'}>
+                      <Link href={'/my-pokemon'}>
                         <a id={'containerButton'}>
                           <Button type="primary" key="goToPokemonList">
                             Go to My Pokemon
