@@ -41,6 +41,7 @@
     "babel-loader": "^8.1.0",
     "babel-plugin-import": "^1.13.0",
     "classnames": "^2.2.6",
+    "critters": "^0.0.7",
     "cross-env": "^7.0.2",
     "css-loader": "^5.0.1",
     "csstype": "2.6.0",
